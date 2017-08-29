@@ -15,6 +15,7 @@ angular.module('crudApp').factory('TodoService',
             function loadAllTodos() {
                 console.log('Fetching all todos');
                 var deferred = $q.defer();
+                
                 $http.get(urls.USER_SERVICE_API)
                     .then(
                         function (response) {
@@ -27,6 +28,7 @@ angular.module('crudApp').factory('TodoService',
                             deferred.reject(errResponse);
                         }
                     );
+                
                 return deferred.promise;
             }
  

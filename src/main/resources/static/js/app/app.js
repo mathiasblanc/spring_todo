@@ -1,7 +1,7 @@
 var app = angular.module('crudApp', [ 'ui.router', 'ngStorage' ]);
 
 app.constant('urls', {
-	BASE : 'http://localhost:8080/todo',
+	BASE : 'http://localhost:8080/todo/',
 	USER_SERVICE_API : 'http://localhost:8080/todo/api/todo/'
 });
 
@@ -12,7 +12,7 @@ app.config([
 
 			$stateProvider.state('home', {
 				url : '/',
-				templateUrl : 'partials/todos',
+				templateUrl : 'partials/todo',
 				controller : 'TodoController',
 				controllerAs : 'ctrl',
 				resolve : {
