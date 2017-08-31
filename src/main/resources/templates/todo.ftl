@@ -5,28 +5,36 @@
 				<div class="todolist not-done">
 					<h1>Todos</h1>
 
-					<input type="text" class="form-control add-todo"
-						placeholder="Add todo">
+					<form ng-submit="ctrl.submit()" name="createForm"
+						class="input-group">
 
-					<button id="checkAll" class="btn btn-success">Mark all as
-						done</button>
+						<span class="input-group-btn">
+							<button id="create" class="btn btn-success">Add</button>
+						</span> <input type="text" class="form-control add-todo"
+							placeholder="so many things ..." ng-model="ctrl.todo.description">
+
+					</form>
 
 					<hr>
 
 					<ul id="sortable" class="list-unstyled"
 						ng-repeat="t in ctrl.getAllTodos()">
+
 						<li class="ui-state-default">
 							<div class="checkbox">
-								<label> <input type="checkbox" value="" /> {{t.name}}
+								<label> <input type="checkbox"
+									ng-click="ctrl.setDone(t.id)" /> {{t.description}}
 								</label>
 							</div>
 						</li>
+
 					</ul>
 
 					<div class="todo-footer">
-						<strong><span class="count-todos"></span>{{ctrl.getAllTodos().length}}</strong>
+						<strong><span class="count-todos"></span>{{ctrl.todos.length}}</strong>
 						Items Left
 					</div>
+
 				</div>
 			</div>
 
@@ -35,8 +43,10 @@
 				<div class="todolist">
 					<h1>Already Done</h1>
 
-					<ul id="done-items" class="list-unstyled">
-						<li>Some item
+					<ul id="done-items" class="list-unstyled"
+						ng-repeat="t in ctrl.getAllDoneTodos()">
+
+						<li>{{t.description}}
 							<button class="remove-item btn btn-default btn-xs pull-right">
 								<span class="glyphicon glyphicon-remove"></span>
 							</button>

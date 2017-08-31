@@ -8,7 +8,7 @@ public interface TodoService {
 
 	Todo findById(Long id);
 
-	Todo findByName(String name);
+	Todo findByDescription(String name);
 
 	void save(Todo todo);
 
@@ -16,7 +16,9 @@ public interface TodoService {
 
 	void delete(Long id);
 
-	List<Todo> findAll();
+	List<Todo> findAllTodos();
+
+	List<Todo> findAllDone();
 
 	boolean exists(Todo todo);
 

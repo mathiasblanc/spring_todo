@@ -2,7 +2,7 @@ var app = angular.module('crudApp', [ 'ui.router', 'ngStorage' ]);
 
 app.constant('urls', {
 	BASE : 'http://localhost:8080/todo/',
-	USER_SERVICE_API : 'http://localhost:8080/todo/api/todo/'
+	SERVICE_API : 'http://localhost:8080/todo/api/todo/'
 });
 
 app.config([
@@ -22,6 +22,9 @@ app.config([
 						var deferred = $q.defer();
 
 						TodoService.loadAllTodos().then(deferred.resolve,
+								deferred.resolve);
+						
+						TodoService.loadAllDoneTodos().then(deferred.resolve,
 								deferred.resolve);
 						return deferred.promise;
 					}

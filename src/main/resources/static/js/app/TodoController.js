@@ -7,15 +7,18 @@ angular.module('crudApp').controller('TodoController',
         var self = this;
         self.todo = {};
         self.todos=[];
+        self.doneTodo= {};
+        self.doneTodos={};
  
         self.submit = submit;
         self.getAllTodos = getAllTodos;
+        self.getAllDoneTodos = getAllDoneTodos;
         self.createTodo = createTodo;
-        self.updateTodo = updateTodo;
-        self.removeTodo = removeTodo;
+        self.setDone = setDone;
+        self.deleteTodo = deleteTodo;
         self.editTodo = editTodo;
         self.reset = reset;
- 
+        
         self.successMessage = '';
         self.errorMessage = '';
         self.done = false;
@@ -25,17 +28,19 @@ angular.module('crudApp').controller('TodoController',
  
         function submit() {
             console.log('Submitting');
+            
             if (self.todo.id === undefined || self.todo.id === null) {
                 console.log('Saving New Todo', self.todo);
                 createTodo(self.todo);
             } else {
-                updateTodo(self.todo, self.todo.id);
+                setDone(self.todo, self.todo.id);
                 console.log('Todo updated with id ', self.todo.id);
             }
         }
  
         function createTodo(todo) {
             console.log('About to create todo');
+            
             TodoService.createTodo(todo)
                 .then(
                     function (response) {
@@ -44,7 +49,7 @@ angular.module('crudApp').controller('TodoController',
                         self.errorMessage='';
                         self.done = true;
                         self.todo={};
-                        $scope.myForm.$setPristine();
+                        $scope.createForm.$setPristine();
                     },
                     function (errResponse) {
                         console.error('Error while creating Todo');
@@ -55,16 +60,16 @@ angular.module('crudApp').controller('TodoController',
         }
  
  
-        function updateTodo(todo, id){
+        function setDone(id){
             console.log('About to update todo');
-            TodoService.updateTodo(todo, id)
+            
+            TodoService.setDone(id)
                 .then(
                     function (response){
                         console.log('Todo updated successfully');
                         self.successMessage='Todo updated successfully';
                         self.errorMessage='';
                         self.done = true;
-                        $scope.myForm.$setPristine();
                     },
                     function(errResponse){
                         console.error('Error while updating Todo');
@@ -75,22 +80,30 @@ angular.module('crudApp').controller('TodoController',
         }
  
  
-        function removeTodo(id){
+        function deleteTodo(id){
             console.log('About to remove Todo with id '+id);
-            TodoService.removeTodo(id)
+            TodoService.deleteTodo(id)
                 .then(
                     function(){
-                        console.log('Todo '+id + ' removed successfully');
+                        console.log('Todo ' +id + ' removed successfully');
                     },
                     function(errResponse){
-                        console.error('Error while removing todo '+id +', Error :'+errResponse.data);
+                        console.error('Error while removing todo ' +id +', Error :'+errResponse.data);
                     }
                 );
+            
+            $scope.createForm.$setPristine();
         }
  
  
         function getAllTodos(){
-            return TodoService.getAllTodos();
+            self.todos = TodoService.getAllTodos();
+            return self.todos;
+        }
+        
+        function getAllDoneTodos(){
+            self.doneTodos = TodoService.getAllDoneTodos();
+            return self.doneTodos;
         }
  
         function editTodo(id) {
@@ -105,11 +118,12 @@ angular.module('crudApp').controller('TodoController',
                 }
             );
         }
+        
         function reset(){
             self.successMessage='';
             self.errorMessage='';
             self.todo={};
-            $scope.myForm.$setPristine(); //reset Form
+            $scope.createForm.$setPristine();
         }
     }
     ]);

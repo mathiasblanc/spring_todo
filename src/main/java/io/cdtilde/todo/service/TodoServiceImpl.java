@@ -20,8 +20,8 @@ public class TodoServiceImpl implements TodoService {
 		return repository.findOne(id);
 	}
 
-	public Todo findByName(String name) {
-		return repository.findByName(name);
+	public Todo findByDescription(String description) {
+		return repository.findByDescription(description);
 	}
 
 	public void save(Todo todo) {
@@ -36,15 +36,20 @@ public class TodoServiceImpl implements TodoService {
 		repository.delete(id);
 	}
 
-	public List<Todo> findAll() {
-		return (List<Todo>) repository.findAll();
+	public List<Todo> findAllTodos() {
+		return repository.findAllTodos();
 	}
 
 	public boolean exists(Todo todo) {
-		if (todo.getId() == null && todo.getName() != null)
-			return findByName(todo.getName()) != null;
+		if (todo.getId() == null && todo.getDescription() != null)
+			return findByDescription(todo.getDescription()) != null;
 
 		return false;
+	}
+
+	@Override
+	public List<Todo> findAllDone() {
+		return repository.findAllDone();
 	}
 
 }
