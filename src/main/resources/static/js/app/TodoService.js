@@ -124,7 +124,7 @@ angular.module('crudApp').factory('TodoService',
                 $http.delete(urls.SERVICE_API + id)
                     .then(
                         function (response) {
-                            loadAllTodos();
+                        	loadAllDoneTodos();
                             deferred.resolve(response.data);
                         },
                         function (errResponse) {

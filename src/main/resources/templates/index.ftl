@@ -6,6 +6,7 @@
 <link href="css/bootstrap.min.css" rel="stylesheet" />
 <link href="css/app.css" rel="stylesheet" />
 <link href="css/todo.css" rel="stylesheet" />
+<link rel="icon" type="image/png" href="img/icon.png" />
 </head>
 <body>
 
